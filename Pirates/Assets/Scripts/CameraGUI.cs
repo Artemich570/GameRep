@@ -112,7 +112,7 @@ public class CameraGUI : MonoBehaviour
                         {
                             newPirate = Instantiate(redPiratPrefab, new Vector3(47, -100, 13), Quaternion.identity, GameObject.Find("Board").transform);
                         }
-                        if (scene.currentPirate.GetComponent<Pirate>().team == "Yellow")
+                        else if (scene.currentPirate.GetComponent<Pirate>().team == "Yellow")
                         {
                             newPirate = Instantiate(yellowPiratPrefab, new Vector3(47, -100, 13), Quaternion.identity, GameObject.Find("Board").transform);
                         }

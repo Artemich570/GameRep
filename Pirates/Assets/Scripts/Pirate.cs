@@ -172,6 +172,15 @@ public class Pirate : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
             else if (onPos == "pos3") { cur_tile.GetComponent<Tile>().pos3 = null; }
             cur_tile.GetComponent<Tile>().TileClicked();
             scene.currentPirate = gameObject;
+            if (cur_tile.GetComponent<Tile>().tileType == "Water")
+            {
+                Kill();
+                return;
+            }
+            if (withCoin)
+            {
+                DropCoin(flag = true);
+            }
             GameObject teamShip = GameObject.Find($"{scene.currentPirate.GetComponent<Pirate>().team}" + "Ship(Clone)");
             teamShip.GetComponent<Ship>().isTile = true;
             teamShip.GetComponent<Ship>().isReady = true;
@@ -276,7 +285,7 @@ public class Pirate : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
         RemoveGlowing();
         CheckTiles();
     }
-    public void DropCoin()
+    public void DropCoin(bool flag = false)
     {
         int coinsNum = 0;
         GameObject cur_tile = CheckCurrentTile();
@@ -292,7 +301,8 @@ public class Pirate : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
         GameObject.Find("Main Camera").GetComponent<CameraGUI>().canTakeCoin = true;
         Instantiate(Resources.Load<GameObject>("Prefabs/CoinPrefab"), new Vector3(cur_tile.transform.position.x - 3, cur_tile.transform.position.y + coinsNum / 5f, cur_tile.transform.position.z - 3), Quaternion.identity);
         RemoveGlowing();
-        CheckTiles();
+        if (!flag) { CheckTiles(); }
+        
     }
 
     public void JustClicked()
@@ -310,6 +320,7 @@ public class Pirate : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
         scene.currentShip = null;
         RemoveGlowing();
         scene.currentPirate = gameObject;
+        GameObject.Find("Main Camera").GetComponent<CameraGUI>().canTakeCoin = false;
     }
 
     public void Kill()
@@ -327,7 +338,10 @@ public class Pirate : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
             {
                 if (collider.GetComponent<Pirate>().team != team && !collider.GetComponent<Pirate>().isTrapped && collider.GetComponent<Pirate>().CheckCurrentTile().GetComponent<Tile>().tileType != "Fort")
                 {
-                    collider.GetComponent<Pirate>().underAttack = true;
+                    if ((inWater && collider.GetComponent<Pirate>().CheckCurrentTile().GetComponent<Tile>().tileType == "Water") || !inWater)
+                    {
+                        collider.GetComponent<Pirate>().underAttack = true;
+                    }
                 }
             }
         }
