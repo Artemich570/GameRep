@@ -79,6 +79,17 @@ public class Pirate : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
                         {
                             collider.gameObject.GetComponent<Tile>().isReady = true;
                         }
+                        Collider[] colliders2 = Physics.OverlapBox(collider.transform.position, size, Quaternion.identity);
+                        foreach (Collider collider2 in colliders2)
+                        {
+                            if (collider2.GetComponent<Pirate>() != null)
+                            {
+                                if (collider2.GetComponent<Pirate>().team != team)
+                                {
+                                    collider.gameObject.GetComponent<Tile>().isReady = false;
+                                }
+                            }
+                        }
                     }
                     else if (inWater && collider.GetComponent<Tile>().tileType == "Water")
                     {
@@ -338,7 +349,7 @@ public class Pirate : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
             {
                 if (collider.GetComponent<Pirate>().team != team && !collider.GetComponent<Pirate>().isTrapped && collider.GetComponent<Pirate>().CheckCurrentTile().GetComponent<Tile>().tileType != "Fort")
                 {
-                    if ((inWater && collider.GetComponent<Pirate>().CheckCurrentTile().GetComponent<Tile>().tileType == "Water") || !inWater)
+                    if ((inWater && collider.GetComponent<Pirate>().CheckCurrentTile().GetComponent<Tile>().tileType == "Water") || (!inWater && collider.GetComponent<Pirate>().onTurntable == 0))
                     {
                         collider.GetComponent<Pirate>().underAttack = true;
                     }
