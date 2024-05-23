@@ -62,13 +62,13 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
             GetComponent<MeshRenderer>().material = Resources.Load<Material>("Tiles/" + DataHolder.darkMaterials[DataHolder.materials.IndexOf(defaultMaterial)]);
         }
         
-        if (tileType == "Revive Fort" || tileType == "Cannibal" || tileType == "Fort")
+        if (tileType == "Horse" || tileType == "4 Sides")
         {
             print(tileType);
         }
         else
         {
-            print("");
+            //print("");
         }
         
     }
@@ -388,6 +388,12 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
             defaultMaterial = "5 turns";
             TurnTable(4);
         }
+        else if (tileType == "Horse")
+        {
+            GetComponent<MeshRenderer>().material = Resources.Load<Material>("Tiles/horse");
+            defaultMaterial = "horse";
+            Horse();
+        }
         else if (tileType == "Water")
         {
             GetComponent<MeshRenderer>().material = Resources.Load<Material>("Tiles/water");
@@ -539,7 +545,11 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
             tile = collider.gameObject;
             if ((tile.GetComponent<Tile>() != null && tile.GetComponent<Tile>().tileType != "Water") || tile.GetComponent<Ship>() != null)
             {
-                if ((tile.transform.position.x == transform.position.x + 10 && tile.transform.position.z == transform.position.z) || (tile.transform.position.x == transform.position.x - 10 && tile.transform.position.z == transform.position.z) || (tile.transform.position.z == transform.position.z + 10 && tile.transform.position.x == transform.position.x) || (tile.transform.position.z == transform.position.z - 10 && tile.transform.position.x == transform.position.x)) // тут просто огромнейшая проверка на то, где именно эта клетка, а именно либо сверху, сниху, справа или слева
+                float tp_x = tile.transform.position.x;
+                float tp_z = tile.transform.position.z;
+                float p_x = transform.position.x;
+                float p_z = transform.position.z;
+                if ((tp_x == p_x + 10 && tp_z == p_z) || (tp_x == p_x - 10 && tp_z == p_z) || (tp_z == p_z + 10 && tp_x == p_x) || (tp_z == p_z - 10 && tp_x == p_x)) // тут просто огромнейшая проверка на то, где именно эта клетка, а именно либо сверху, сниху, справа или слева
                 {
                     if (tile.GetComponent<Tile>() != null)
                     {
@@ -794,6 +804,49 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
                         tile.GetComponent<Ship>().isReady = true;
                     }
                 }
+            }
+        }
+    }
+
+    public void Horse()
+    {
+        scene.newTurn = true;
+        scene.isMoving = true; 
+        scene.currentPirate.GetComponent<Pirate>().Clicked(false);
+        GameObject tile;
+        Collider[] colliders = Physics.OverlapBox(transform.position, new Vector3(20, 10, 20), Quaternion.identity);
+        foreach (Collider collider in colliders)
+        {
+            tile = collider.gameObject;
+            if ((tile.GetComponent<Tile>() != null && tile.GetComponent<Tile>().tileType != "Water") || tile.GetComponent<Ship>() != null)
+            {
+                float tp_x = tile.transform.position.x;
+                float tp_z = tile.transform.position.z;
+                float p_x = transform.position.x;
+                float p_z = transform.position.z;
+                if ((tp_x == p_x - 10 && tp_z == p_z - 20) || (tp_x == p_x - 20 && tp_z == p_z - 10) || (tp_x == p_x - 20 && tp_z == p_z + 10) || (tp_x == p_x - 10 && tp_z == p_z + 20) || (tp_x == p_x + 10 && tp_z == p_z + 20) || (tp_x == p_x + 20 && tp_z == p_z + 10) || (tp_x == p_x + 20 && tp_z == p_z - 10) || (tp_x == p_x + 10 && tp_z == p_z - 20))
+                {
+                    if (tile.GetComponent<Tile>() != null)
+                    {
+                        if (scene.currentPirate.GetComponent<Pirate>().withCoin)
+                        {
+                            if (tile.GetComponent<Tile>().isOpened)
+                            {
+                                tile.GetComponent<Tile>().isReady = true;
+                            }
+                        }
+                        else
+                        {
+                            tile.GetComponent<Tile>().isReady = true;
+                        }
+                    }
+                    else if (tile.GetComponent<Ship>() != null)
+                    {
+                        tile.GetComponent<Ship>().isTile = true;
+                        tile.GetComponent<Ship>().isReady = true;
+                    }
+                }
+
             }
         }
     }
