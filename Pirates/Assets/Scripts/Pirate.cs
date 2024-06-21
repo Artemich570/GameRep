@@ -79,7 +79,7 @@ public class Pirate : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
                         {
                             collider.gameObject.GetComponent<Tile>().isReady = true;
                         }
-                        Collider[] colliders2 = Physics.OverlapBox(collider.transform.position, size, Quaternion.identity);
+                        Collider[] colliders2 = Physics.OverlapBox(collider.transform.position, new Vector3(5, 5, 5), Quaternion.identity);
                         foreach (Collider collider2 in colliders2)
                         {
                             if (collider2.GetComponent<Pirate>() != null)
@@ -268,12 +268,12 @@ public class Pirate : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
         {
             if (collider.CompareTag("Coin") && !withCoin)
             {
-                GameObject.Find("Main Camera").GetComponent<CameraGUI>().canTakeCoin = true;
+                GameObject.Find("Canvas").GetComponent<CameraGUI>().canTakeCoin = true;
                 break;
             }
             else
             {
-                GameObject.Find("Main Camera").GetComponent<CameraGUI>().canTakeCoin = false;
+                GameObject.Find("Canvas").GetComponent<CameraGUI>().canTakeCoin = false;
             }
         }
     }
@@ -287,7 +287,7 @@ public class Pirate : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
             {
                 withCoin = true;
                 Destroy(collider.gameObject);
-                GameObject.Find("Main Camera").GetComponent<CameraGUI>().canTakeCoin = false;
+                GameObject.Find("Canvas").GetComponent<CameraGUI>().canTakeCoin = false;
                 //RemoveGlowing();
                 break;
             }
@@ -309,7 +309,7 @@ public class Pirate : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
             }
         }
         withCoin = false;
-        GameObject.Find("Main Camera").GetComponent<CameraGUI>().canTakeCoin = true;
+        GameObject.Find("Canvas").GetComponent<CameraGUI>().canTakeCoin = true;
         Instantiate(Resources.Load<GameObject>("Prefabs/CoinPrefab"), new Vector3(cur_tile.transform.position.x - 3, cur_tile.transform.position.y + coinsNum / 5f, cur_tile.transform.position.z - 3), Quaternion.identity);
         RemoveGlowing();
         if (!flag) { CheckTiles(); }
@@ -331,7 +331,7 @@ public class Pirate : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
         scene.currentShip = null;
         RemoveGlowing();
         scene.currentPirate = gameObject;
-        GameObject.Find("Main Camera").GetComponent<CameraGUI>().canTakeCoin = false;
+        GameObject.Find("Canvas").GetComponent<CameraGUI>().canTakeCoin = false;
     }
 
     public void Kill()
