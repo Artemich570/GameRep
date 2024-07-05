@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System.Linq;
 
 public class Pirate : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
@@ -178,25 +179,39 @@ public class Pirate : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
         if (victim)
         {
             GameObject cur_tile = CheckCurrentTile();
-            if (onPos == "pos1") { cur_tile.GetComponent<Tile>().pos1 = null; }
-            else if (onPos == "pos2") { cur_tile.GetComponent<Tile>().pos2 = null; }
-            else if (onPos == "pos3") { cur_tile.GetComponent<Tile>().pos3 = null; }
+            GameObject last_pirate = scene.currentPirate;
+            GameObject teamShip = GameObject.Find($"{team}" + "Ship(Clone)");
+
+            Collider[] colliders = Physics.OverlapBox(cur_tile.transform.position, new Vector3(4, 4, 4), Quaternion.identity);
+            foreach (Collider collider in colliders)
+            {
+                if (collider.GetComponent<Pirate>() != null)
+                {
+                    if (collider.GetComponent<Pirate>().team != last_pirate.GetComponent<Pirate>().team)
+                    {
+                        if (onPos == "pos1") { cur_tile.GetComponent<Tile>().pos1 = null; }
+                        else if (onPos == "pos2") { cur_tile.GetComponent<Tile>().pos2 = null; }
+                        else if (onPos == "pos3") { cur_tile.GetComponent<Tile>().pos3 = null; }
+
+                        if (cur_tile.GetComponent<Tile>().tileType == "Water")
+                        {
+                            collider.GetComponent<Pirate>().Kill();
+                        }
+                        if (collider.GetComponent<Pirate>().withCoin)
+                        {
+                            collider.GetComponent<Pirate>().DropCoin(flag = true);
+                        }
+                        
+                        scene.currentPirate = collider.gameObject;
+                        teamShip.GetComponent<Ship>().isTile = true;
+                        teamShip.GetComponent<Ship>().isReady = true;
+                        teamShip.GetComponent<Ship>().Clicked();
+                        underAttack = false;
+                    }
+                }
+            }
+            scene.currentPirate = last_pirate;
             cur_tile.GetComponent<Tile>().TileClicked();
-            scene.currentPirate = gameObject;
-            if (cur_tile.GetComponent<Tile>().tileType == "Water")
-            {
-                Kill();
-                return;
-            }
-            if (withCoin)
-            {
-                DropCoin(flag = true);
-            }
-            GameObject teamShip = GameObject.Find($"{scene.currentPirate.GetComponent<Pirate>().team}" + "Ship(Clone)");
-            teamShip.GetComponent<Ship>().isTile = true;
-            teamShip.GetComponent<Ship>().isReady = true;
-            teamShip.GetComponent<Ship>().Clicked();
-            underAttack = false;
         }
         else
         {
@@ -221,7 +236,8 @@ public class Pirate : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
                 lastTile = cur_tile;
             }
 
-            print($"{onPos}, {cur_tile}");
+            //print($"{onPos}, {cur_tile}");
+            /*
             if (onPos == "pos1")
             {
                 if (cur_tile.GetComponent<Ship>() != null)
@@ -255,8 +271,9 @@ public class Pirate : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
                     cur_tile.GetComponent<Tile>().pos3 = null;
                 }
             }
+            */
             CheckPirates();
-            onPos = null;
+            //onPos = null;
         }
         
     }
@@ -347,9 +364,9 @@ public class Pirate : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
         {
             if (collider.GetComponent<Pirate>() != null && collider.gameObject != gameObject)
             {
-                if (collider.GetComponent<Pirate>().team != team && !collider.GetComponent<Pirate>().isTrapped && collider.GetComponent<Pirate>().CheckCurrentTile().GetComponent<Tile>().tileType != "Fort")
+                if (collider.GetComponent<Pirate>().team != team && !collider.GetComponent<Pirate>().isTrapped && collider.GetComponent<Pirate>().CheckCurrentTile().GetComponent<Tile>().tileType != "Fort" && collider.GetComponent<Pirate>().CheckCurrentTile().GetComponent<Tile>().tileType != "Revive Fort")
                 {
-                    if ((inWater && collider.GetComponent<Pirate>().CheckCurrentTile().GetComponent<Tile>().tileType == "Water") || (!inWater && collider.GetComponent<Pirate>().onTurntable == 0))
+                    if ((inWater && collider.GetComponent<Pirate>().CheckCurrentTile().GetComponent<Tile>().tileType == "Water") || (!inWater && collider.GetComponent<Pirate>().onTurntable == 0 && !collider.GetComponent<Pirate>().inWater))
                     {
                         collider.GetComponent<Pirate>().underAttack = true;
                     }
