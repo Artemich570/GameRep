@@ -364,7 +364,7 @@ public class Pirate : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
         {
             if (collider.GetComponent<Pirate>() != null && collider.gameObject != gameObject)
             {
-                if (collider.GetComponent<Pirate>().team != team && !collider.GetComponent<Pirate>().isTrapped && collider.GetComponent<Pirate>().CheckCurrentTile().GetComponent<Tile>().tileType != "Fort" && collider.GetComponent<Pirate>().CheckCurrentTile().GetComponent<Tile>().tileType != "Revive Fort")
+                if (collider.GetComponent<Pirate>().team != team && !collider.GetComponent<Pirate>().isTrapped && collider.GetComponent<Pirate>().CheckCurrentTile().GetComponent<Tile>().tileType != "Fort" && collider.GetComponent<Pirate>().CheckCurrentTile().GetComponent<Tile>().tileType != "Revive Fort" && collider.GetComponent<Pirate>().CheckCurrentTile().GetComponent<Ship>() == null)
                 {
                     if ((inWater && collider.GetComponent<Pirate>().CheckCurrentTile().GetComponent<Tile>().tileType == "Water") || (!inWater && collider.GetComponent<Pirate>().onTurntable == 0 && !collider.GetComponent<Pirate>().inWater))
                     {

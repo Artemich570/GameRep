@@ -11,12 +11,14 @@ public class SceneController : MonoBehaviour
     public bool newTurn;
     public bool firstMove;
     public bool endTurn;
+    public int movesCounter;
     public Dictionary<string, int> piretesNum;
 
     public GameObject currentPirate;
     public GameObject currentShip;
     void Start()
     {
+        movesCounter = 0;
         firstMove = true;
         teams = DataHolder.teams;
         for (int i = 0; i < teams.Count; i++)
@@ -45,12 +47,18 @@ public class SceneController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (movesCounter >= 10)
+        {
+            currentPirate.GetComponent<Pirate>().Kill();
+            movesCounter = 0;
+            isMoving = false;
+        }
     }
 
     //функция для смены хода
     public void NextTurn()
     {
+        movesCounter = 0;
         int teamIndex = teams.IndexOf(teamTurn);
         for (int i = 1; i < teams.Count; i++)
         {

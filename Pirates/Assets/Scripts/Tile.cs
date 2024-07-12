@@ -62,7 +62,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
             GetComponent<MeshRenderer>().material = Resources.Load<Material>("Tiles/" + DataHolder.darkMaterials[DataHolder.materials.IndexOf(defaultMaterial)]);
         }
         
-        if (tileType == "Horse" || tileType == "4 Sides")
+        if (tileType == "Revive Fort" || tileType == "Cannibal")
         {
             print(tileType);
         }
@@ -90,11 +90,15 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
         
     }
 
-    public void TileClicked()
+    public void TileClicked(string from = "human")
     {
-        PirateKiller(gameObject.GetComponent<Collider>()); //Функция которая бьет всех пиратов, стоящих на клетке
+        if (from == "arrow")
+        {
+            scene.movesCounter++;
+        }
         if (scene.currentPirate != null)
         {
+            PirateKiller(gameObject.GetComponent<Collider>()); //Функция которая бьет всех пиратов, стоящих на клетке
             //Убираю текщего пирата с клетки с его
             string onPos = scene.currentPirate.GetComponent<Pirate>().onPos;
             GameObject cur_tile = scene.currentPirate.GetComponent<Pirate>().CheckCurrentTile();
@@ -487,31 +491,43 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
 
     public void Left()
     {
-        scene.newTurn = true;
-        scene.isMoving = true;
-        scene.currentPirate.GetComponent<Pirate>().Clicked(false);
-        StartCoroutine(Waiter("left"));  
+        if (scene.currentPirate != null)
+        {
+            scene.newTurn = true;
+            scene.isMoving = true;
+            scene.currentPirate.GetComponent<Pirate>().Clicked(false);
+            StartCoroutine(Waiter("left"));
+        }
     }
     public void Right()
     {
-        scene.newTurn = true;
-        scene.isMoving = true;
-        scene.currentPirate.GetComponent<Pirate>().Clicked(false);
-        StartCoroutine(Waiter("right"));
+        if (scene.currentPirate != null)
+        {
+            scene.newTurn = true;
+            scene.isMoving = true;
+            scene.currentPirate.GetComponent<Pirate>().Clicked(false);
+            StartCoroutine(Waiter("right"));
+        }
     }
     public void Up()
     {
-        scene.newTurn = true;
-        scene.isMoving = true;
-        scene.currentPirate.GetComponent<Pirate>().Clicked(false);
-        StartCoroutine(Waiter("up"));
+        if (scene.currentPirate != null)
+        {
+            scene.newTurn = true;
+            scene.isMoving = true;
+            scene.currentPirate.GetComponent<Pirate>().Clicked(false);
+            StartCoroutine(Waiter("up"));
+        }
     }
     public void Down()
     {
-        scene.newTurn = true;
-        scene.isMoving = true;
-        scene.currentPirate.GetComponent<Pirate>().Clicked(false);
-        StartCoroutine(Waiter("down"));
+        if (scene.currentPirate != null)
+        {
+            scene.newTurn = true;
+            scene.isMoving = true;
+            scene.currentPirate.GetComponent<Pirate>().Clicked(false);
+            StartCoroutine(Waiter("down"));
+        }
     }
 
     public void Rum()
@@ -979,44 +995,8 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
                         }
                     }
                     PirateKiller(collider);
-                    /*
-                    GameObject cur_tile = collider.gameObject;
-                    GameObject last_pirate = scene.currentPirate;
-                    //GameObject teamShip = GameObject.Find($"{team}" + "Ship(Clone)");
-
-                    Collider[] pcolliders = Physics.OverlapBox(cur_tile.transform.position, new Vector3(4, 4, 4), Quaternion.identity);
-                    foreach (Collider pcollider in pcolliders)
-                    {
-                        if (pcollider.GetComponent<Pirate>() != null)
-                        {
-                            if (pcollider.GetComponent<Pirate>().team != last_pirate.GetComponent<Pirate>().team)
-                            {
-                                if (pcollider.GetComponent<Pirate>().onPos == "pos1") { cur_tile.GetComponent<Tile>().pos1 = null; }
-                                else if (pcollider.GetComponent<Pirate>().onPos == "pos2") { cur_tile.GetComponent<Tile>().pos2 = null; }
-                                else if (pcollider.GetComponent<Pirate>().onPos == "pos3") { cur_tile.GetComponent<Tile>().pos3 = null; }
-
-                                if (cur_tile.GetComponent<Tile>().tileType == "Water" || cur_tile.GetComponent<Tile>().tileType == "Fort" || cur_tile.GetComponent<Tile>().tileType == "Revive Fort")
-                                {
-                                    last_pirate.GetComponent<Pirate>().Kill();
-                                    //return;
-                                }
-                                if (pcollider.GetComponent<Pirate>().withCoin)
-                                {
-                                    pcollider.GetComponent<Pirate>().DropCoin(true);
-                                }
-                                GameObject teamShip = GameObject.Find($"{pcollider.GetComponent<Pirate>().team}" + "Ship(Clone)");
-                                scene.currentPirate = pcollider.gameObject;
-                                teamShip.GetComponent<Ship>().isTile = true;
-                                teamShip.GetComponent<Ship>().isReady = true;
-                                teamShip.GetComponent<Ship>().Clicked();
-                                //underAttack = false;
-                            }
-                        }
-                    }
-                    scene.currentPirate = last_pirate;
-                    */
                     collider.GetComponent<Tile>().isReady = true;
-                    collider.GetComponent<Tile>().TileClicked();
+                    collider.GetComponent<Tile>().TileClicked("arrow");
                 }
             }
         }
@@ -1036,19 +1016,20 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
             {
                 if (pcollider.GetComponent<Pirate>().team != last_pirate.GetComponent<Pirate>().team)
                 {
-                    if (pcollider.GetComponent<Pirate>().onPos == "pos1") { cur_tile.GetComponent<Tile>().pos1 = null; }
-                    else if (pcollider.GetComponent<Pirate>().onPos == "pos2") { cur_tile.GetComponent<Tile>().pos2 = null; }
-                    else if (pcollider.GetComponent<Pirate>().onPos == "pos3") { cur_tile.GetComponent<Tile>().pos3 = null; }
-
                     if (cur_tile.GetComponent<Tile>().tileType == "Water" || cur_tile.GetComponent<Tile>().tileType == "Fort" || cur_tile.GetComponent<Tile>().tileType == "Revive Fort")
                     {
                         last_pirate.GetComponent<Pirate>().Kill();
-                        //return;
+                        return;
                     }
                     if (pcollider.GetComponent<Pirate>().withCoin)
                     {
                         pcollider.GetComponent<Pirate>().DropCoin(true);
                     }
+
+                    if (pcollider.GetComponent<Pirate>().onPos == "pos1") { cur_tile.GetComponent<Tile>().pos1 = null; }
+                    else if (pcollider.GetComponent<Pirate>().onPos == "pos2") { cur_tile.GetComponent<Tile>().pos2 = null; }
+                    else if (pcollider.GetComponent<Pirate>().onPos == "pos3") { cur_tile.GetComponent<Tile>().pos3 = null; }
+
                     GameObject teamShip = GameObject.Find($"{pcollider.GetComponent<Pirate>().team}" + "Ship(Clone)");
                     scene.currentPirate = pcollider.gameObject;
                     teamShip.GetComponent<Ship>().isTile = true;
@@ -1092,7 +1073,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
                 GetCurrentTile(10, 0, 0);
                 break;
             case "crocodile1":
-                scene.currentPirate.GetComponent<Pirate>().lastTile.GetComponent<Tile>().TileClicked();
+                scene.currentPirate.GetComponent<Pirate>().lastTile.GetComponent<Tile>().TileClicked("arrow");
                 break;
             case "crocodile2":
                 scene.currentPirate.GetComponent<Pirate>().lastTile.GetComponent<Ship>().isTile = true;

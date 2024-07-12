@@ -36,7 +36,6 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
-    - UnityEngine.UI.Text
     - UnityEngine.UI.Toggle
   sceneClasses:
     Assets/Scenes/Game.unity:
@@ -79,7 +78,7 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11550}
     - Class: 114
-      Script: {instanceID: 11594}
+      Script: {instanceID: 11640}
     - Class: 114
       Script: {instanceID: 11800}
     - Class: 114
@@ -88,6 +87,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 12142}
     - Class: 114
       Script: {instanceID: 12344}
+    - Class: 114
+      Script: {instanceID: 12716}
     - Class: 114
       Script: {instanceID: 13036}
     - Class: 114
@@ -113,6 +114,8 @@ ScriptsOnlyBuild:
     - Class: 157
       Script: {instanceID: 0}
     - Class: 196
+      Script: {instanceID: 0}
+    - Class: 213
       Script: {instanceID: 0}
     - Class: 222
       Script: {instanceID: 0}
@@ -338,7 +341,7 @@ ScriptsOnlyBuild:
     className: PhysicsRaycaster
   - hash:
       serializedVersion: 2
-      Hash: 7cf8516e0f2654142de7671e18c8f9b1
+      Hash: d2e891cd76cebfcbb69f3a9a889a8d3d
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CameraGUI
@@ -422,7 +425,7 @@ ScriptsOnlyBuild:
     className: Selectable
   - hash:
       serializedVersion: 2
-      Hash: 07524168d68f67916991ff29ed8a7b34
+      Hash: e8f5b52d40f53c60648fc764483c8036
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: SceneController

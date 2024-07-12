@@ -67,7 +67,7 @@ public class CameraGUI : MonoBehaviour
         }
         else { movesLeft.text = ""; }
 
-        if (!GameObject.Find("SceneController").GetComponent<SceneController>().isMoving)
+        if (!scene.isMoving)
         {
             nextMove.gameObject.SetActive(true);
         }
@@ -159,82 +159,4 @@ public class CameraGUI : MonoBehaviour
         cur_tile.GetComponent<Tile>().TileClicked();
     }
 
-    private void OnGUI()
-    {
-        /*
-        //проверяю, все ли пираты стоят, а не двигаются, если все стоят, то отображаю кнопку, в противном случае - нет
-        if (!GameObject.Find("SceneController").GetComponent<SceneController>().isMoving)
-        {
-            if (GUI.Button(new Rect(Screen.width - 480, Screen.height - 160, 460, 140), "<size=30>Next Move</size>"))
-            {
-                scene.NextTurn();
-                scene.isMoving = true;
-            }
-        }
-        
-        if (scene.currentPirate != null)
-        {
-            if (canTakeCoin)
-            {
-                if (GUI.Button(new Rect(Screen.width - 480, Screen.height - 320, 460, 140), "<size=30>Take coin</size>"))
-                {
-                    //print("You took a coin");
-                    scene.currentPirate.GetComponent<Pirate>().TakeCoin();
-                }
-            }
-
-            if (scene.currentPirate.GetComponent<Pirate>().withCoin)
-            {
-                if (GUI.Button(new Rect(Screen.width - 480, Screen.height - 320, 460, 140), "<size=30>Drop coin</size>"))
-                {
-                    scene.currentPirate.GetComponent<Pirate>().DropCoin();
-                }
-            }
-
-            if (scene.currentPirate.GetComponent<Pirate>().onTurntable > 0)
-            {
-                if (GUI.Button(new Rect(Screen.width - 480, Screen.height - 160, 460, 140), "<size=30>Move</size>"))
-                {
-                    scene.currentPirate.GetComponent<Pirate>().onTurntable--;
-                    scene.currentPirate = null;
-                    scene.isMoving = false;
-                    scene.endTurn = true;
-                }
-            }
-
-            if (scene.currentPirate.GetComponent<Pirate>().CheckCurrentTile().GetComponent<Tile>() != null)
-            {
-                if (scene.currentPirate.GetComponent<Pirate>().CheckCurrentTile().GetComponent<Tile>().tileType == "Revive Fort" && scene.piretesNum[scene.currentPirate.GetComponent<Pirate>().team] < 3)
-                {
-                    if (GUI.Button(new Rect(Screen.width - 960, Screen.height - 160, 460, 140), "<size=30>Revive</size>"))
-                    {
-                        GameObject cur_tile = scene.currentPirate.GetComponent<Pirate>().CheckCurrentTile();
-                        GameObject newPirate = null;
-                        if (scene.currentPirate.GetComponent<Pirate>().team == "Black")
-                        {
-
-                            newPirate = Instantiate(blackPiratPrefab, new Vector3(47, -100, 13), Quaternion.identity, GameObject.Find("Board").transform);
-                        }
-                        else if (scene.currentPirate.GetComponent<Pirate>().team == "White")
-                        {
-                            newPirate = Instantiate(whitePiratPrefab, new Vector3(47, -100, 13), Quaternion.identity, GameObject.Find("Board").transform);
-                        }
-                        else if (scene.currentPirate.GetComponent<Pirate>().team == "Red")
-                        {
-                            newPirate = Instantiate(redPiratPrefab, new Vector3(47, -100, 13), Quaternion.identity, GameObject.Find("Board").transform);
-                        }
-                        else if (scene.currentPirate.GetComponent<Pirate>().team == "Yellow")
-                        {
-                            newPirate = Instantiate(yellowPiratPrefab, new Vector3(47, -100, 13), Quaternion.identity, GameObject.Find("Board").transform);
-                        }
-                        //cur_tile.GetComponent<Tile>().TileClicked();
-                        scene.piretesNum[scene.currentPirate.GetComponent<Pirate>().team] += 1;
-                        scene.currentPirate = newPirate;
-                        cur_tile.GetComponent<Tile>().TileClicked();
-                    }
-                }
-            }
-        }
-        */
-    }
 }
