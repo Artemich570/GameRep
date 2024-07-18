@@ -227,7 +227,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
         {
             scene.currentPirate.GetComponent<Pirate>().CheckCoins(); //Проверка на монеты вокруг
         }
-        
+
         scene.RemoveGlowing();
 
         if (tileType == "Free")
@@ -493,6 +493,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
     {
         if (scene.currentPirate != null)
         {
+            GameObject.Find("Canvas").GetComponent<CameraGUI>().candropCoin = false;
             scene.newTurn = true;
             scene.isMoving = true;
             scene.currentPirate.GetComponent<Pirate>().Clicked(false);
@@ -503,6 +504,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
     {
         if (scene.currentPirate != null)
         {
+            GameObject.Find("Canvas").GetComponent<CameraGUI>().candropCoin = false;
             scene.newTurn = true;
             scene.isMoving = true;
             scene.currentPirate.GetComponent<Pirate>().Clicked(false);
@@ -513,6 +515,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
     {
         if (scene.currentPirate != null)
         {
+            GameObject.Find("Canvas").GetComponent<CameraGUI>().candropCoin = false;
             scene.newTurn = true;
             scene.isMoving = true;
             scene.currentPirate.GetComponent<Pirate>().Clicked(false);
@@ -523,6 +526,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
     {
         if (scene.currentPirate != null)
         {
+            GameObject.Find("Canvas").GetComponent<CameraGUI>().candropCoin = false;
             scene.newTurn = true;
             scene.isMoving = true;
             scene.currentPirate.GetComponent<Pirate>().Clicked(false);
@@ -562,6 +566,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
     {
         if (scene.currentPirate.GetComponent<Pirate>().lastTile.GetComponent<Tile>() != null)
         {
+            GameObject.Find("Canvas").GetComponent<CameraGUI>().candropCoin = false;
             scene.newTurn = true;
             scene.isMoving = true;
             scene.currentPirate.GetComponent<Pirate>().Clicked(false);
@@ -865,6 +870,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
 
     public void Horse()
     {
+        GameObject.Find("Canvas").GetComponent<CameraGUI>().candropCoin = false;
         scene.newTurn = true;
         scene.isMoving = true; 
         scene.currentPirate.GetComponent<Pirate>().Clicked(false);
@@ -913,6 +919,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
 
     public void Cannon(string direction)
     {
+        GameObject.Find("Canvas").GetComponent<CameraGUI>().candropCoin = false;
         for (int i = 10; i < 10000; i+=10)
         {
             Vector3 newPos = transform.position;
@@ -960,6 +967,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
 
     public void GetCurrentTile(int x, int y, int z)
     {
+        GameObject.Find("Canvas").GetComponent<CameraGUI>().candropCoin = false;
         Collider[] colliders = Physics.OverlapBox(new Vector3(transform.position.x + x, transform.position.y, transform.position.z + z), new Vector3(1, 1, 1), Quaternion.identity);
         bool onShip = false;
 

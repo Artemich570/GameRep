@@ -8,6 +8,7 @@ public class CameraMovement : MonoBehaviour
     private Camera cam;
 
     public float scrollSpeed = 500f;
+    public float touchSpeed = 4f;
     public int maxDistance = 200;
     public int minDistance = 50;
 
@@ -25,14 +26,49 @@ public class CameraMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //прокручивание колесика
-        if (Input.GetAxis("Mouse ScrollWheel") > 0.1 && transform.position.y > minDistance)
+        if (Input.touchCount == 2)
         {
-            transform.position += transform.forward * Time.deltaTime * scrollSpeed;
+            Touch tZero = Input.GetTouch(0);
+            Touch tOne = Input.GetTouch(1);
+
+            //Get current position of touch from previus frame
+            Vector2 tZeroPrevius = tZero.position - tZero.deltaPosition;
+            Vector2 tOnePrevius = tOne.position - tOne.deltaPosition;
+
+            float oldTouchDistance = Vector2.Distance(tZeroPrevius, tOnePrevius);
+            float CurrentDistance = Vector2.Distance(tZero.position, tOne.position);
+
+            //GET offset value
+            float DeltaDistance = oldTouchDistance - CurrentDistance;
+
+            cam.fieldOfView += DeltaDistance * touchSpeed;
+            cam.fieldOfView = Mathf.Clamp(cam.fieldOfView, 20f, 60f);
         }
-        if (Input.GetAxis("Mouse ScrollWheel") < -0.1 && transform.position.y < maxDistance)
+
+        else
         {
-            transform.position -= transform.forward * Time.deltaTime * scrollSpeed;
+            /*
+            float scroll = Input.GetAxis("Mouse ScrollWheel");
+            zoom(scroll, scrollSpeed);
+            if (cam.fieldOfView < minDistance)
+            {
+                cam.fieldOfView = minDistance;
+            }
+            else if (cam.fieldOfView > maxDistance)
+            {
+                cam.fieldOfView = maxDistance;
+            }
+            */
+            //прокручивание колесика
+            if (Input.GetAxis("Mouse ScrollWheel") > 0.1 && transform.position.y > minDistance)
+            {
+                transform.position += transform.forward * Time.deltaTime * scrollSpeed;
+            }
+            if (Input.GetAxis("Mouse ScrollWheel") < -0.1 && transform.position.y < maxDistance)
+            {
+                transform.position -= transform.forward * Time.deltaTime * scrollSpeed;
+            }
+            
         }
 
         //нажатие на мышку
@@ -49,5 +85,10 @@ public class CameraMovement : MonoBehaviour
             Vector3 difference = dragOrigin - cam.ScreenToWorldPoint(mp);
             transform.position += difference;
         }
+    }
+
+    public void Zoom(float DeltaDistDiff, float speed)
+    {
+        
     }
 }

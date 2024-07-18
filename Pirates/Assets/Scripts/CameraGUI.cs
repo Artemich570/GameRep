@@ -8,6 +8,7 @@ public class CameraGUI : MonoBehaviour
 {
     private SceneController scene;
     public bool canTakeCoin;
+    public bool candropCoin;
     public bool canRevive;
     public GameObject activePlayer;
     public TMP_Text black, white, red, yellow, team, movesLeft;
@@ -81,7 +82,7 @@ public class CameraGUI : MonoBehaviour
             }
             else { takeCoin.gameObject.SetActive(false); }
 
-            if (scene.currentPirate.GetComponent<Pirate>().withCoin)
+            if (scene.currentPirate.GetComponent<Pirate>().withCoin && candropCoin)
             {
                 dropCoin.gameObject.SetActive(true);
             }

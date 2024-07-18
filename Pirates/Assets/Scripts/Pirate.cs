@@ -17,6 +17,7 @@ public class Pirate : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
     public int onTurntable;
     SceneController scene;
     public bool underAttack;
+    private string[] forbidden = new string[] { "Crocodile", "Air balloon", "Cannon Left", "Cannon Up", "Cannon Right", "Cannon Down", "Left", "Right", "Up", "Down", "4 Sides", "Up or Down", "Up or Left", "Up or Right", "Down or Left", "Down or Right", "Left or Right", "2 Turns", "3 Turns", "4 Turns", "5 Turns", "Horse", "Water" };
 
     // Start is called before the first frame update
     void Start()
@@ -235,45 +236,19 @@ public class Pirate : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
                 CheckCoins();
                 lastTile = cur_tile;
             }
-
-            //print($"{onPos}, {cur_tile}");
-            /*
-            if (onPos == "pos1")
-            {
-                if (cur_tile.GetComponent<Ship>() != null)
-                {
-                    cur_tile.GetComponent<Ship>().pos1 = null;
-                }
-                else
-                {
-                    cur_tile.GetComponent<Tile>().pos1 = null;
-                }
-            }
-            else if (onPos == "pos2")
-            {
-                if (cur_tile.GetComponent<Ship>() != null)
-                {
-                    cur_tile.GetComponent<Ship>().pos2 = null;
-                }
-                else
-                {
-                    cur_tile.GetComponent<Tile>().pos2 = null;
-                }
-            }
-            else if (onPos == "pos3")
-            {
-                if (cur_tile.GetComponent<Ship>() != null)
-                {
-                    cur_tile.GetComponent<Ship>().pos3 = null;
-                }
-                else
-                {
-                    cur_tile.GetComponent<Tile>().pos3 = null;
-                }
-            }
-            */
             CheckPirates();
-            //onPos = null;
+
+            if (cur_tile.GetComponent<Tile>() != null)
+            {
+                if (forbidden.Contains(cur_tile.GetComponent<Tile>().tileType))
+                {
+                    GameObject.Find("Canvas").GetComponent<CameraGUI>().candropCoin = false;
+                }
+                else
+                {
+                    GameObject.Find("Canvas").GetComponent<CameraGUI>().candropCoin = true;
+                }
+            }
         }
         
     }

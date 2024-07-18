@@ -114,9 +114,45 @@ public class Ship : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
     {
         if (isTile && isReady)
         {
+            string onPos = scene.currentPirate.GetComponent<Pirate>().onPos;
+            GameObject cur_tile = scene.currentPirate.GetComponent<Pirate>().CheckCurrentTile();
+            if (onPos == "pos1")
+            {
+                if (cur_tile.GetComponent<Ship>() != null)
+                {
+                    cur_tile.GetComponent<Ship>().pos1 = null;
+                }
+                else
+                {
+                    cur_tile.GetComponent<Tile>().pos1 = null;
+                }
+            }
+            else if (onPos == "pos2")
+            {
+                if (cur_tile.GetComponent<Ship>() != null)
+                {
+                    cur_tile.GetComponent<Ship>().pos2 = null;
+                }
+                else
+                {
+                    cur_tile.GetComponent<Tile>().pos2 = null;
+                }
+            }
+            else if (onPos == "pos3")
+            {
+                if (cur_tile.GetComponent<Ship>() != null)
+                {
+                    cur_tile.GetComponent<Ship>().pos3 = null;
+                }
+                else
+                {
+                    cur_tile.GetComponent<Tile>().pos3 = null;
+                }
+            }
+
             if (pos1 == null)
             {
-                print(scene.currentPirate);
+                //print(scene.currentPirate);
                 pos1 = scene.currentPirate;
                 scene.currentPirate.GetComponent<Pirate>().onPos = "pos1";
                 scene.currentPirate.transform.position = new Vector3(transform.position.x, transform.position.y+1, transform.position.z);
@@ -133,6 +169,7 @@ public class Ship : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
                 scene.currentPirate.GetComponent<Pirate>().onPos = "pos3";
                 scene.currentPirate.transform.position = new Vector3(transform.position.x - 3, transform.position.y+1, transform.position.z + 3);
             }
+
             if (scene.currentPirate.GetComponent<Pirate>().inWater)
             {
                 scene.currentPirate.GetComponent<Pirate>().inWater = false;
