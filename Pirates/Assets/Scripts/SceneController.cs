@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {
@@ -58,6 +59,7 @@ public class SceneController : MonoBehaviour
     //функция для смены хода
     public void NextTurn()
     {
+        CheckEnd();
         movesCounter = 0;
         int teamIndex = teams.IndexOf(teamTurn);
         for (int i = 1; i < teams.Count; i++)
@@ -115,6 +117,42 @@ public class SceneController : MonoBehaviour
             {
                 tile.GetComponent<Tile>().isReady = false;
             }
+        }
+    }
+    public void CheckEnd()
+    {
+        bool allTiles = true;
+        bool allCoins = true;
+        Collider[] colliders = Physics.OverlapBox(transform.position, new Vector3(500, 500, 500), Quaternion.identity);
+        foreach (Collider collider in colliders)
+        {
+            if (collider.GetComponent<Tile>() != null)
+            {
+                if (!collider.GetComponent<Tile>().isOpened)
+                {
+                    allTiles = false;
+                    break;
+                }
+            }
+            if (collider.GetComponent<Pirate>() != null)
+            {
+                if (collider.GetComponent<Pirate>().withCoin)
+                {
+                    allCoins = false;
+                    break;
+                }
+            }
+            if (collider.name == "CoinPrefab(Clone)")
+            {
+                allCoins = false;
+                break;
+            }
+        }
+
+        if (allTiles && allCoins)
+        {
+            print("Game Over");
+            SceneManager.LoadScene("Menu");
         }
     }
 }

@@ -204,7 +204,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
             {
                 if (collider.GetComponent<Pirate>() != null)
                 {
-                    scene.piretesNum[collider.GetComponent<Pirate>().team] -= 1;
+                    //scene.piretesNum[collider.GetComponent<Pirate>().team] -= 1;
                     collider.GetComponent<Pirate>().Kill();
                     /*
                     if (collider.GetComponent<Pirate>().team != scene.currentShip.GetComponent<Ship>().team)
@@ -584,7 +584,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
 
     public void Cannibal()
     {
-        scene.piretesNum[scene.currentPirate.GetComponent<Pirate>().team] -= 1;
+        //scene.piretesNum[scene.currentPirate.GetComponent<Pirate>().team] -= 1;
         scene.currentPirate.GetComponent<Pirate>().Kill();
     }
 
@@ -635,6 +635,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
 
             }
         }
+        KillIfNoTiles();
     }
 
     public void LeftOrRight()
@@ -674,6 +675,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
 
             }
         }
+        KillIfNoTiles();
     }
 
     public void UpOrDown()
@@ -713,6 +715,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
 
             }
         }
+        KillIfNoTiles();
     }
 
     public void UpOrLeft()
@@ -751,6 +754,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
                 }
             }
         }
+        KillIfNoTiles();
     }
 
     public void UpOrRight()
@@ -789,6 +793,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
                 }
             }
         }
+        KillIfNoTiles();
     }
 
     public void DownOrLeft()
@@ -827,6 +832,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
                 }
             }
         }
+        KillIfNoTiles();
     }
 
     public void DownOrRight()
@@ -866,6 +872,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
                 }
             }
         }
+        KillIfNoTiles();
     }
 
     public void Horse()
@@ -910,6 +917,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
 
             }
         }
+        KillIfNoTiles();
     }
 
     public void TurnTable(int number)
@@ -942,7 +950,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
                     }
                     else
                     {
-                        scene.piretesNum[scene.currentPirate.GetComponent<Pirate>().team] -= 1;
+                        //scene.piretesNum[scene.currentPirate.GetComponent<Pirate>().team] -= 1;
                         scene.currentPirate.GetComponent<Pirate>().Kill();
                     }
                     onShip = true;
@@ -1050,6 +1058,28 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
         scene.currentPirate = last_pirate;
         //collider.GetComponent<Tile>().isReady = true;
         //cur_tile.GetComponent<Tile>().TileClicked();
+    }
+
+    public void KillIfNoTiles()
+    {
+        bool noTiles = true;
+        Collider[] colliders = Physics.OverlapBox(transform.position, new Vector3(20, 20, 20), Quaternion.identity);
+        foreach (Collider collider in colliders)
+        {
+            if (collider.GetComponent<Tile>() != null)
+            {
+                if (collider.GetComponent<Tile>().isReady)
+                {
+                    noTiles = false;
+                    break;
+                }
+            }
+        }
+        if (noTiles)
+        {
+            scene.currentPirate.GetComponent<Pirate>().Kill();
+            scene.isMoving = false;
+        }
     }
 
     public void CoinSpawner(int amount)

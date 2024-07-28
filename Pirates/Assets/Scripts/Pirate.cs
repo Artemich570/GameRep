@@ -328,6 +328,7 @@ public class Pirate : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
 
     public void Kill()
     {
+        scene.piretesNum[team] -= 1;
         Destroy(gameObject);
     }
 

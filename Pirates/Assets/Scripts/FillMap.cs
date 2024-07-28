@@ -35,11 +35,30 @@ public class FillMap : MonoBehaviour
                     }
                     else
                     {
+                        // Чтобы создать кетку в нужном месте
+
+                        /*
+                        if (x == 100 && z == -90)
+                        {
+                            tile = Instantiate(grassPrefab, new Vector3(x, 0, z), Quaternion.identity, gameObject.transform);
+                            string tileType = "Up or Left";
+                            tiles.Add(tile, tileType);
+                            tileTypes.Remove(tileType);
+                        }
+                        
+                        else
+                        {
+                            tile = Instantiate(grassPrefab, new Vector3(x, 0, z), Quaternion.identity, gameObject.transform);
+                            string tileType = tileTypes[Random.Range(0, tileTypes.Count)]; // присваиваю этой клетке случайный тип, а потом удаляю его из массива tileTypes
+                            tiles.Add(tile, tileType);
+                            tileTypes.Remove(tileType);
+                        }
+                        */
+
                         tile = Instantiate(grassPrefab, new Vector3(x, 0, z), Quaternion.identity, gameObject.transform);
                         string tileType = tileTypes[Random.Range(0, tileTypes.Count)]; // присваиваю этой клетке случайный тип, а потом удаляю его из массива tileTypes
                         tiles.Add(tile, tileType);
                         tileTypes.Remove(tileType);
-
                     }
                 }
                 else
