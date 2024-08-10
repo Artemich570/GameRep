@@ -53,6 +53,7 @@ public class SceneController : MonoBehaviour
             currentPirate.GetComponent<Pirate>().Kill();
             movesCounter = 0;
             isMoving = false;
+            RemoveGlowing();
         }
     }
 
@@ -128,7 +129,7 @@ public class SceneController : MonoBehaviour
         {
             if (collider.GetComponent<Tile>() != null)
             {
-                if (!collider.GetComponent<Tile>().isOpened)
+                if (!collider.GetComponent<Tile>().isOpened && collider.GetComponent<Tile>().tileType != "Water")
                 {
                     allTiles = false;
                     break;

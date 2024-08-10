@@ -37,15 +37,32 @@ public class FillMap : MonoBehaviour
                     {
                         // Чтобы создать кетку в нужном месте
 
-                        /*
-                        if (x == 100 && z == -90)
-                        {
-                            tile = Instantiate(grassPrefab, new Vector3(x, 0, z), Quaternion.identity, gameObject.transform);
-                            string tileType = "Up or Left";
-                            tiles.Add(tile, tileType);
-                            tileTypes.Remove(tileType);
-                        }
                         
+                        if ((x == 90 && z == -70) || (x == 100 && z == -60) || (x==90 && z == -80))
+                        {
+                            if (x == 90 && z == -80)
+                            {
+                                tile = Instantiate(grassPrefab, new Vector3(x, 0, z), Quaternion.identity, gameObject.transform);
+                                string tileType = "Horse";
+                                tiles.Add(tile, tileType);
+                                tileTypes.Remove(tileType);
+                            }
+                            if (x == 90 && z == -70)
+                            {
+                                tile = Instantiate(grassPrefab, new Vector3(x, 0, z), Quaternion.identity, gameObject.transform);
+                                string tileType = "Ice";
+                                tiles.Add(tile, tileType);
+                                tileTypes.Remove(tileType);
+                            }
+                            if (x == 100 && z == -60)
+                            {
+                                tile = Instantiate(grassPrefab, new Vector3(x, 0, z), Quaternion.identity, gameObject.transform);
+                                string tileType = "Plane";
+                                tiles.Add(tile, tileType);
+                                tileTypes.Remove(tileType);
+                            }
+                        }
+
                         else
                         {
                             tile = Instantiate(grassPrefab, new Vector3(x, 0, z), Quaternion.identity, gameObject.transform);
@@ -53,12 +70,13 @@ public class FillMap : MonoBehaviour
                             tiles.Add(tile, tileType);
                             tileTypes.Remove(tileType);
                         }
-                        */
+                        
 
-                        tile = Instantiate(grassPrefab, new Vector3(x, 0, z), Quaternion.identity, gameObject.transform);
-                        string tileType = tileTypes[Random.Range(0, tileTypes.Count)]; // присваиваю этой клетке случайный тип, а потом удаляю его из массива tileTypes
-                        tiles.Add(tile, tileType);
-                        tileTypes.Remove(tileType);
+
+                        //tile = Instantiate(grassPrefab, new Vector3(x, 0, z), Quaternion.identity, gameObject.transform);
+                        //string tileType = tileTypes[Random.Range(0, tileTypes.Count)]; // присваиваю этой клетке случайный тип, а потом удаляю его из массива tileTypes
+                        //tiles.Add(tile, tileType);
+                        //tileTypes.Remove(tileType);
                     }
                 }
                 else

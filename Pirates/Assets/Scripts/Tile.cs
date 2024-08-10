@@ -239,6 +239,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
         {
             GetComponent<MeshRenderer>().material = Resources.Load<Material>("Tiles/ice");
             defaultMaterial = "ice";
+            Ice();
         }
         else if (tileType == "Trap")
         {
@@ -474,6 +475,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
     {
         if (!isOpened)
         {
+            scene.currentPirate.GetComponent<Pirate>().lastTile = gameObject;
             scene.newTurn = true;
             scene.isMoving = true;
             scene.currentPirate.GetComponent<Pirate>().Clicked(false);
@@ -483,6 +485,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
     }
     public void AirBalloon()
     {
+        scene.currentPirate.GetComponent<Pirate>().lastTile = gameObject;
         GameObject teamShip = GameObject.Find($"{scene.currentPirate.GetComponent<Pirate>().team}" + "Ship(Clone)");
         teamShip.GetComponent<Ship>().isTile = true;
         teamShip.GetComponent<Ship>().isReady = true;
@@ -493,44 +496,48 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
     {
         if (scene.currentPirate != null)
         {
+            scene.currentPirate.GetComponent<Pirate>().lastTile = gameObject;
             GameObject.Find("Canvas").GetComponent<CameraGUI>().candropCoin = false;
             scene.newTurn = true;
             scene.isMoving = true;
             scene.currentPirate.GetComponent<Pirate>().Clicked(false);
-            StartCoroutine(Waiter("left"));
+            StartCoroutine(Waiter(10, 0));
         }
     }
     public void Right()
     {
         if (scene.currentPirate != null)
         {
+            scene.currentPirate.GetComponent<Pirate>().lastTile = gameObject;
             GameObject.Find("Canvas").GetComponent<CameraGUI>().candropCoin = false;
             scene.newTurn = true;
             scene.isMoving = true;
             scene.currentPirate.GetComponent<Pirate>().Clicked(false);
-            StartCoroutine(Waiter("right"));
+            StartCoroutine(Waiter(-10, 0));
         }
     }
     public void Up()
     {
         if (scene.currentPirate != null)
         {
+            scene.currentPirate.GetComponent<Pirate>().lastTile = gameObject;
             GameObject.Find("Canvas").GetComponent<CameraGUI>().candropCoin = false;
             scene.newTurn = true;
             scene.isMoving = true;
             scene.currentPirate.GetComponent<Pirate>().Clicked(false);
-            StartCoroutine(Waiter("up"));
+            StartCoroutine(Waiter(0, -10));
         }
     }
     public void Down()
     {
         if (scene.currentPirate != null)
         {
+            scene.currentPirate.GetComponent<Pirate>().lastTile = gameObject;
             GameObject.Find("Canvas").GetComponent<CameraGUI>().candropCoin = false;
             scene.newTurn = true;
             scene.isMoving = true;
             scene.currentPirate.GetComponent<Pirate>().Clicked(false);
-            StartCoroutine(Waiter("down"));
+            StartCoroutine(Waiter(0, 10));
         }
     }
 
@@ -564,20 +571,21 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
 
     public void Crocodile()
     {
+        //scene.currentPirate.GetComponent<Pirate>().lastTile = gameObject;
         if (scene.currentPirate.GetComponent<Pirate>().lastTile.GetComponent<Tile>() != null)
         {
             GameObject.Find("Canvas").GetComponent<CameraGUI>().candropCoin = false;
             scene.newTurn = true;
             scene.isMoving = true;
             scene.currentPirate.GetComponent<Pirate>().Clicked(false);
-            StartCoroutine(Waiter("crocodile1"));
+            StartCoroutine(Waiter(special: "crocodile1"));
         }
         else
         {
             scene.newTurn = true;
             scene.isMoving = true;
             scene.currentPirate.GetComponent<Pirate>().Clicked(false);
-            StartCoroutine(Waiter("crocodile2"));
+            StartCoroutine(Waiter(special: "crocodile1"));
         }
         
     }
@@ -595,6 +603,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
 
     public void FourSides()
     {
+        scene.currentPirate.GetComponent<Pirate>().lastTile = gameObject;
         scene.newTurn = true;
         scene.isMoving = true; //говорю, что игрок ходит, а не стоит на месте
         scene.currentPirate.GetComponent<Pirate>().Clicked(false);
@@ -640,6 +649,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
 
     public void LeftOrRight()
     {
+        scene.currentPirate.GetComponent<Pirate>().lastTile = gameObject;
         scene.newTurn = true;
         scene.isMoving = true;
         scene.currentPirate.GetComponent<Pirate>().Clicked(false);
@@ -680,6 +690,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
 
     public void UpOrDown()
     {
+        scene.currentPirate.GetComponent<Pirate>().lastTile = gameObject;
         scene.newTurn = true;
         scene.isMoving = true;
         scene.currentPirate.GetComponent<Pirate>().Clicked(false);
@@ -720,6 +731,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
 
     public void UpOrLeft()
     {
+        scene.currentPirate.GetComponent<Pirate>().lastTile = gameObject;
         scene.newTurn = true;
         scene.isMoving = true;
         scene.currentPirate.GetComponent<Pirate>().Clicked(false);
@@ -759,6 +771,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
 
     public void UpOrRight()
     {
+        scene.currentPirate.GetComponent<Pirate>().lastTile = gameObject;
         scene.newTurn = true;
         scene.isMoving = true;
         scene.currentPirate.GetComponent<Pirate>().Clicked(false);
@@ -798,6 +811,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
 
     public void DownOrLeft()
     {
+        scene.currentPirate.GetComponent<Pirate>().lastTile = gameObject;
         scene.newTurn = true;
         scene.isMoving = true;
         scene.currentPirate.GetComponent<Pirate>().Clicked(false);
@@ -837,6 +851,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
 
     public void DownOrRight()
     {
+        scene.currentPirate.GetComponent<Pirate>().lastTile = gameObject;
         scene.newTurn = true;
         scene.isMoving = true;
         scene.currentPirate.GetComponent<Pirate>().Clicked(false);
@@ -877,6 +892,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
 
     public void Horse()
     {
+        scene.currentPirate.GetComponent<Pirate>().lastTile = gameObject;
         GameObject.Find("Canvas").GetComponent<CameraGUI>().candropCoin = false;
         scene.newTurn = true;
         scene.isMoving = true; 
@@ -923,6 +939,33 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
     public void TurnTable(int number)
     {
         scene.currentPirate.GetComponent<Pirate>().onTurntable = number;
+    }
+
+    public void Ice()
+    {
+        scene.newTurn = true;
+        scene.isMoving = true;
+        scene.currentPirate.GetComponent<Pirate>().Clicked(false);
+        string lastTile;
+        if (scene.currentPirate.GetComponent<Pirate>().lastTile.GetComponent<Tile>() != null)
+        {
+            lastTile = scene.currentPirate.GetComponent<Pirate>().lastTile.GetComponent<Tile>().tileType;
+        }
+        else
+        {
+            lastTile = "";
+        }
+        if (lastTile == "Horse") { Horse(); }
+        else if (lastTile == "Plane" && !scene.currentPirate.GetComponent<Pirate>().lastTile.GetComponent<Tile>().isOpened) { Up(); }
+        //else if (lastTile == "Left") { Left(); }
+        //else if (lastTile == "Right") { Down(); }
+        else
+        {
+            int d_x = (int)transform.position.x - (int)scene.currentPirate.GetComponent<Pirate>().lastTile.transform.position.x;
+            int d_z = (int)transform.position.z - (int)scene.currentPirate.GetComponent<Pirate>().lastTile.transform.position.z;
+            StartCoroutine(Waiter(x:d_x, z:d_z));
+            //GetCurrentTile();
+        }
     }
 
     public void Cannon(string direction)
@@ -1093,31 +1136,23 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
         }
     }
 
-    public IEnumerator Waiter(string direction)
+    public IEnumerator Waiter(int x = 0, int z = 0, string special = "")
     {
         yield return new WaitForSeconds(0.1f);
-        switch (direction)
+
+        if (special == "crocodile1")
         {
-            case "up":
-                GetCurrentTile(0, 0, -10);
-                break;
-            case "down":
-                GetCurrentTile(0, 0, 10);
-                break;
-            case "right":
-                GetCurrentTile(-10, 0, 0);
-                break;
-            case "left":
-                GetCurrentTile(10, 0, 0);
-                break;
-            case "crocodile1":
-                scene.currentPirate.GetComponent<Pirate>().lastTile.GetComponent<Tile>().TileClicked("arrow");
-                break;
-            case "crocodile2":
-                scene.currentPirate.GetComponent<Pirate>().lastTile.GetComponent<Ship>().isTile = true;
-                scene.currentPirate.GetComponent<Pirate>().lastTile.GetComponent<Ship>().isReady = true;
-                scene.currentPirate.GetComponent<Pirate>().lastTile.GetComponent<Ship>().Clicked();
-                break;
+            scene.currentPirate.GetComponent<Pirate>().lastTile.GetComponent<Tile>().TileClicked("arrow");
+        }
+        else if (special == "crocodile2")
+        {
+            scene.currentPirate.GetComponent<Pirate>().lastTile.GetComponent<Ship>().isTile = true;
+            scene.currentPirate.GetComponent<Pirate>().lastTile.GetComponent<Ship>().isReady = true;
+            scene.currentPirate.GetComponent<Pirate>().lastTile.GetComponent<Ship>().Clicked();
+        }
+        else
+        {
+            GetCurrentTile(x, 0, z);
         }
     }
 }

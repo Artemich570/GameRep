@@ -341,7 +341,7 @@ ScriptsOnlyBuild:
     className: PhysicsRaycaster
   - hash:
       serializedVersion: 2
-      Hash: d2e891cd76cebfcbb69f3a9a889a8d3d
+      Hash: e2826d49d7ce6fc70e211be0fd74fb32
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CameraGUI
