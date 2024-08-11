@@ -585,7 +585,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
             scene.newTurn = true;
             scene.isMoving = true;
             scene.currentPirate.GetComponent<Pirate>().Clicked(false);
-            StartCoroutine(Waiter(special: "crocodile1"));
+            StartCoroutine(Waiter(special: "crocodile2"));
         }
         
     }
@@ -943,6 +943,10 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
 
     public void Ice()
     {
+        if (scene.currentPirate == null)
+        {
+            return;
+        }
         scene.newTurn = true;
         scene.isMoving = true;
         scene.currentPirate.GetComponent<Pirate>().Clicked(false);
@@ -963,9 +967,10 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
         {
             int d_x = (int)transform.position.x - (int)scene.currentPirate.GetComponent<Pirate>().lastTile.transform.position.x;
             int d_z = (int)transform.position.z - (int)scene.currentPirate.GetComponent<Pirate>().lastTile.transform.position.z;
-            StartCoroutine(Waiter(x:d_x, z:d_z));
+            StartCoroutine(Waiter(d_x, d_z));
             //GetCurrentTile();
         }
+        scene.currentPirate.GetComponent<Pirate>().lastTile = gameObject;
     }
 
     public void Cannon(string direction)
@@ -1143,6 +1148,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, I
         if (special == "crocodile1")
         {
             scene.currentPirate.GetComponent<Pirate>().lastTile.GetComponent<Tile>().TileClicked("arrow");
+            scene.currentPirate.GetComponent<Pirate>().lastTile = gameObject;
         }
         else if (special == "crocodile2")
         {

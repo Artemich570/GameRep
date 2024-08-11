@@ -38,12 +38,12 @@ public class FillMap : MonoBehaviour
                         // Чтобы создать кетку в нужном месте
 
                         
-                        if ((x == 90 && z == -70) || (x == 100 && z == -60) || (x==90 && z == -80))
+                        if ((x == 90 && z == -70) || (x == 90 && z == -60) || (x==90 && z == -80))
                         {
                             if (x == 90 && z == -80)
                             {
                                 tile = Instantiate(grassPrefab, new Vector3(x, 0, z), Quaternion.identity, gameObject.transform);
-                                string tileType = "Horse";
+                                string tileType = "Crocodile";
                                 tiles.Add(tile, tileType);
                                 tileTypes.Remove(tileType);
                             }
@@ -54,10 +54,10 @@ public class FillMap : MonoBehaviour
                                 tiles.Add(tile, tileType);
                                 tileTypes.Remove(tileType);
                             }
-                            if (x == 100 && z == -60)
+                            if (x == 90 && z == -60)
                             {
                                 tile = Instantiate(grassPrefab, new Vector3(x, 0, z), Quaternion.identity, gameObject.transform);
-                                string tileType = "Plane";
+                                string tileType = "Up";
                                 tiles.Add(tile, tileType);
                                 tileTypes.Remove(tileType);
                             }

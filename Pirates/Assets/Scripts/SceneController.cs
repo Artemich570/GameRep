@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class SceneController : MonoBehaviour
 {
@@ -53,6 +54,8 @@ public class SceneController : MonoBehaviour
             currentPirate.GetComponent<Pirate>().Kill();
             movesCounter = 0;
             isMoving = false;
+            //newTurn = false;
+            //endTurn = true;
             RemoveGlowing();
         }
     }
@@ -150,7 +153,7 @@ public class SceneController : MonoBehaviour
             }
         }
 
-        if (allTiles && allCoins)
+        if (allTiles && allCoins || (piretesNum.Sum(x => x.Value) == 0))
         {
             print("Game Over");
             SceneManager.LoadScene("Menu");
